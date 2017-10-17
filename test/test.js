@@ -71,7 +71,9 @@ function onTestBtnClicked() {
     .then(function(response) {
       // Process response
       response.complete("success");
+      alert('Payment is successful!');
     }).catch(function(err) {
       console.error("Uh oh, something bad happened", err.message);
+      alert('Payment is failed!');
     });
 }
