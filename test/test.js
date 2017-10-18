@@ -14,7 +14,7 @@ const paymentDetails = {
     label: 'Total',  
     amount:{  
       currency: 'USD',  
-      value: 0  
+      value: 1.50  
     }  
   }
 };
