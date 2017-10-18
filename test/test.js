@@ -15,38 +15,9 @@ const paymentDetails = {
   }
 };  
 
+
 // Options isn't required.  
 const options = {};
-
-
-
-var supportedInstruments = [
-  {
-    supportedMethods: ['basic-card'],
-    data: {
-      supportedNetworks: ['amex', 'discover', 'mastercard', 'visa']
-    }
-  },
-  {
-    supportedMethods: ['https://android.com/pay'],
-    data: {
-      //merchant ID obtained from Google that maps to your origin
-      merchantId: '02510116604241796260',
-      environment: 'TEST',
-      // Credit Cards allowed via Android Pay
-      allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA', 'DISCOVER'],
-      paymentMethodTokenizationParameters: {
-        tokenizationType: 'GATEWAY_TOKEN',
-        parameters: {
-          'gateway': 'stripe',
-          // Place your own Stripe publishable key here.
-          'stripe:publishableKey': 'pk_live_fD7ggZCtrB0vJNApRX5TyJ9T',
-          'stripe:version': '2016-07-06'
-        }
-      }
-    }
-  }
-];
 
 
 /**
@@ -71,9 +42,131 @@ function onTestBtnClicked() {
     .then(function(response) {
       // Process response
       response.complete("success");
+      console.log("Payment success!");
       alert('Payment is successful!');
     }).catch(function(err) {
       console.error("Uh oh, something bad happened", err.message);
-      alert('Payment is failed!');
+      alert('Payment is cancelled!');
     });
 }
+
+
+//==============================================================================
+
+// meta data for spay payment test
+const spayMethodStg = "https://ecomm.stg.mpay.samsung.com/ew/v1/vco/w3c";
+const supportedPayMethods = [  
+    {  
+        supportedMethods: [spayMethodStg],  
+    }  
+]; 
+const dummyDetails = {
+    total: {
+        label: "Total due",
+        amount: { currency: "USD", value: "00.00" }
+    }
+};
+const dummyOptions = {};
+
+function buildPaymentRequest(checkoutPaymentInfo, visaData, payInitParams) {
+
+    if (!window.PaymentRequest) {
+        console.log("buildSimplePaymentRequest: PaymentRequest API is not available!");
+        alert('PaymentRequest API is not available!');
+        return null;
+    }
+    
+    // generate payment request data:
+    var payRequestData = {
+        checkoutPartner: "VisaCheckout",
+        requestPayload: {
+            data: {
+                checkoutPaymentInfo: checkoutPaymentInfo,
+                visaIntentData: visaData,
+                paymentInitParams: payInitParams
+            }
+        }
+    };
+    
+    // generate payment method data:
+    var methodData = [{
+        supportedMethods: supportedPayMethods,
+        data: payRequestData
+    }];
+    
+    
+    // generate W3C PaymentRequest object:
+    var dummyRequest = new PaymentRequest(  
+        methodData,  
+        dummyDetails,  // not being used since spay has its own payment sheet.
+        dummyOptions  
+    );
+    
+    return dummyRequest;
+}
+
+//==============================================================================
+
+const btnAction = "Continue";
+const shippingNeeded = false;
+const checkoutPaymentInfo = {
+    currencyCode: "USD",
+    total: "20.00",
+    buttonAction: btnAction,
+    reviewMessage: "Review message"
+};
+
+// create a variable holding dummy payment parameters:
+const paymentInitParams = {
+	correlationId: "correlation_id_1234",
+	visitId: "visit_id_1234",
+	locale: "en_US",
+	collectShippingAddress: shippingNeeded,
+	CheckoutPaymentInfo: {
+		currencyCode: "USD",
+		total: "44.47",
+		buttonAction: btnAction
+	},
+	PaymentConstraints: {
+		acceptedBillingCountries: ["US", "CA", "AU"],
+		acceptedShippingCountries: [],
+		acceptedCardBrands: ["VISA"],
+		acceptCanadianVisaDebit: false
+	},
+	MerchantInfo: {
+		displayName: "Test Merchant Name",
+		logoUrl: "http://merchant.com/logo",
+		websiteUrl: "http://merchant.com",
+		customerSupportUrl: "http://merchant.com/customerservice",
+		bannerDisplayName: "Banner",
+		bannerURL: "http://merchant.com/banner",
+		currencyFormat: "USD",
+		countryCode: "US"
+	}
+};
+
+const visaIntentData =          "ew0KCSJyZWZlcmVuY2VVUkwiOiAiaHR0cDovL3d3dy5nb29nbGUuY29tIiwNCgkibWVyY2hhbnRBcGlLZXkiOiAiMEdLU1dLQTBaOEJLTEc0UlVBSjUxM0NHeG15RVRNWTBhUU41ZE5Yc3dlWlJQOXFTQSIsDQoJIm9yZGVySWQiOiAiTWFub2oxMjM0NSIsDQoJImV2ZW50U291cmNlIjogIkxpZ2h0Ym94VFciLA0KCSJjaGFubmVsIjogIldlYiIsDQoJImN1cnJlbmN5Q29kZSI6ICJVU0QiLA0KCSJzdWJ0b3RhbCI6ICI4MCIsDQoJInNoaXBwaW5nSGFuZGxpbmciOiAiNSIsDQoJInRheCI6ICI1IiwNCgkiZGlzY291bnQiOiAiNSIsDQoJImdpZnRXcmFwIjogIjEwIiwNCgkibWlzYyI6ICI1IiwNCgkidG90YWwiOiAiMTAwIiwNCgkicmV2aWV3TWVzc2FnZSI6ICJJbiBjb21wdXRpbmcsIHBsYWluIHRleHQgaXMgdGhlIGRhdGEgKCkiLA0KCSJtZXJjaGFudENvbmZpZyI6IHsNCgkJImV4dGVybmFsUHJvZmlsZUlkIjogIlRlc3QxIg0KCX0NCn0=";
+
+
+function onBuyBtnClicked() {
+    console.log("onBuyBtnClicked()...");
+    var request = buildPaymentRequest(checkoutPaymentInfo, visaIntentData, paymentInitParams);
+    if (request == null) {
+        console.error("Null PaymentRequest!");
+        return;
+    }
+    
+    console.log("request.show()...");
+    request.show()  
+    .then(function(response) {
+      // Process response
+      response.complete("success");
+      console.log("Payment success!");
+      alert('Payment is successful!');
+    }).catch(function(err) {
+      console.error("Something bad happened", err.message);
+      alert('Payment is cancelled!');
+    });
+}
+
+
