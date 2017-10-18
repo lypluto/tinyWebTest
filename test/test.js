@@ -20,7 +20,7 @@ const paymentDetails = {
 };
 
 /**
- * click event of Test button
+ * Click event of Basic Cards Pay button
  */
 function onBasicBuyBtnClicked() {
     console.log("onTestBtnClicked()...");
@@ -64,6 +64,11 @@ const dummyDetails = {
 };
 const dummyOptions = {};
 
+/**
+ * This method is used to generate a W3C PaymentRequest object
+ * based on given info.
+ * 
+ */
 function buildPaymentRequest(checkoutPaymentInfo, visaData, payInitParams) {
 
     if (!window.PaymentRequest) {
@@ -103,8 +108,8 @@ function buildPaymentRequest(checkoutPaymentInfo, visaData, payInitParams) {
 
 //------------------------------------------------------------------------------
 
-const btnAction = "Continue";
-const shippingNeeded = false;
+const btnAction = "Pay";        // need to show amount on payment sheet
+const shippingNeeded = true;    // need to show shipping addr on payment sheet
 const checkoutPaymentInfo = {
     currencyCode: "USD",
     total: "20.00",
@@ -143,7 +148,9 @@ const paymentInitParams = {
 
 const visaIntentData =          "ew0KCSJyZWZlcmVuY2VVUkwiOiAiaHR0cDovL3d3dy5nb29nbGUuY29tIiwNCgkibWVyY2hhbnRBcGlLZXkiOiAiMEdLU1dLQTBaOEJLTEc0UlVBSjUxM0NHeG15RVRNWTBhUU41ZE5Yc3dlWlJQOXFTQSIsDQoJIm9yZGVySWQiOiAiTWFub2oxMjM0NSIsDQoJImV2ZW50U291cmNlIjogIkxpZ2h0Ym94VFciLA0KCSJjaGFubmVsIjogIldlYiIsDQoJImN1cnJlbmN5Q29kZSI6ICJVU0QiLA0KCSJzdWJ0b3RhbCI6ICI4MCIsDQoJInNoaXBwaW5nSGFuZGxpbmciOiAiNSIsDQoJInRheCI6ICI1IiwNCgkiZGlzY291bnQiOiAiNSIsDQoJImdpZnRXcmFwIjogIjEwIiwNCgkibWlzYyI6ICI1IiwNCgkidG90YWwiOiAiMTAwIiwNCgkicmV2aWV3TWVzc2FnZSI6ICJJbiBjb21wdXRpbmcsIHBsYWluIHRleHQgaXMgdGhlIGRhdGEgKCkiLA0KCSJtZXJjaGFudENvbmZpZyI6IHsNCgkJImV4dGVybmFsUHJvZmlsZUlkIjogIlRlc3QxIg0KCX0NCn0=";
 
-
+/**
+ * Click event for Spay Buy button
+ */
 function onSpayBuyBtnClicked() {
     console.log("onBuyBtnClicked()...");
     var request = buildPaymentRequest(checkoutPaymentInfo, visaIntentData, paymentInitParams);
