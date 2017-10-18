@@ -1,4 +1,5 @@
 
+/*
 const supportedPaymentMethods = [  
   {  
     supportedMethods: ['basic-card'],  
@@ -15,16 +16,17 @@ const paymentDetails = {
   }
 };  
 
-
 // Options isn't required.  
 const options = {};
-
+*/
 
 /**
  * click event of Test button
  */
 function onTestBtnClicked() {
     console.log("onTestBtnClicked()...");
+    
+    /*
 
     if (!window.PaymentRequest) {
         console.log("buildSimplePaymentRequest: PaymentRequest API is not available!");
@@ -48,18 +50,19 @@ function onTestBtnClicked() {
       console.error("Uh oh, something bad happened", err.message);
       alert('Payment is cancelled!');
     });
+    */
 }
 
 
 //==============================================================================
 
 // meta data for spay payment test
-const spayMethodStg = "https://ecomm.stg.mpay.samsung.com/ew/v1/vco/w3c";
 const supportedPayMethods = [  
     {  
-        supportedMethods: [spayMethodStg],  
+        supportedMethods: ['https://ecomm.stg.mpay.samsung.com/ew/v1/vco/w3c'],  
     }  
-]; 
+];
+
 const dummyDetails = {
     total: {
         label: "Total due",
