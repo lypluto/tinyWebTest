@@ -57,11 +57,7 @@ function onTestBtnClicked() {
 //==============================================================================
 
 // meta data for spay payment test
-const supportedPayMethods = [  
-    {  
-        supportedMethods: ['https://ecomm.stg.mpay.samsung.com/ew/v1/vco/w3c'],  
-    }  
-];
+const supportedPayMethods = ['https://ecomm.stg.mpay.samsung.com/ew/v1/vco/w3c'];
 
 const dummyDetails = {
     total: {
@@ -162,13 +158,13 @@ function onBuyBtnClicked() {
     console.log("request.show()...");
     request.show()  
     .then(function(response) {
-      // Process response
-      response.complete("success");
-      console.log("Payment success!");
-      alert('Payment is successful!');
+        // Process response
+        response.complete("success");
+        console.log("Payment success!");
+        alert('Payment is successful!');
     }).catch(function(err) {
-      console.error("Something bad happened", err.message);
-      alert('Payment is cancelled!');
+        console.error("Something bad happened", err.message);
+        alert('Payment is cancelled!');
     });
 }
 
