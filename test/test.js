@@ -1,5 +1,8 @@
 
-/*
+
+//==============================================================================
+//  Basic Cards Buy button event
+//==============================================================================
 const supportedPaymentMethods = [  
   {  
     supportedMethods: ['basic-card'],  
@@ -14,19 +17,13 @@ const paymentDetails = {
       value: 0  
     }  
   }
-};  
-
-// Options isn't required.  
-const options = {};
-*/
+};
 
 /**
  * click event of Test button
  */
-function onTestBtnClicked() {
+function onBasicBuyBtnClicked() {
     console.log("onTestBtnClicked()...");
-    
-    /*
 
     if (!window.PaymentRequest) {
         console.log("buildSimplePaymentRequest: PaymentRequest API is not available!");
@@ -37,7 +34,7 @@ function onTestBtnClicked() {
     const request = new PaymentRequest(  
       supportedPaymentMethods,  
       paymentDetails,  
-      options  
+      {}  
     );
     
     request.show()  
@@ -50,10 +47,10 @@ function onTestBtnClicked() {
       console.error("Uh oh, something bad happened", err.message);
       alert('Payment is cancelled!');
     });
-    */
 }
 
-
+//==============================================================================
+//  Spay Buy button event
 //==============================================================================
 
 // meta data for spay payment test
@@ -104,7 +101,7 @@ function buildPaymentRequest(checkoutPaymentInfo, visaData, payInitParams) {
     return dummyRequest;
 }
 
-//==============================================================================
+//------------------------------------------------------------------------------
 
 const btnAction = "Continue";
 const shippingNeeded = false;
@@ -147,7 +144,7 @@ const paymentInitParams = {
 const visaIntentData =          "ew0KCSJyZWZlcmVuY2VVUkwiOiAiaHR0cDovL3d3dy5nb29nbGUuY29tIiwNCgkibWVyY2hhbnRBcGlLZXkiOiAiMEdLU1dLQTBaOEJLTEc0UlVBSjUxM0NHeG15RVRNWTBhUU41ZE5Yc3dlWlJQOXFTQSIsDQoJIm9yZGVySWQiOiAiTWFub2oxMjM0NSIsDQoJImV2ZW50U291cmNlIjogIkxpZ2h0Ym94VFciLA0KCSJjaGFubmVsIjogIldlYiIsDQoJImN1cnJlbmN5Q29kZSI6ICJVU0QiLA0KCSJzdWJ0b3RhbCI6ICI4MCIsDQoJInNoaXBwaW5nSGFuZGxpbmciOiAiNSIsDQoJInRheCI6ICI1IiwNCgkiZGlzY291bnQiOiAiNSIsDQoJImdpZnRXcmFwIjogIjEwIiwNCgkibWlzYyI6ICI1IiwNCgkidG90YWwiOiAiMTAwIiwNCgkicmV2aWV3TWVzc2FnZSI6ICJJbiBjb21wdXRpbmcsIHBsYWluIHRleHQgaXMgdGhlIGRhdGEgKCkiLA0KCSJtZXJjaGFudENvbmZpZyI6IHsNCgkJImV4dGVybmFsUHJvZmlsZUlkIjogIlRlc3QxIg0KCX0NCn0=";
 
 
-function onBuyBtnClicked() {
+function onSpayBuyBtnClicked() {
     console.log("onBuyBtnClicked()...");
     var request = buildPaymentRequest(checkoutPaymentInfo, visaIntentData, paymentInitParams);
     if (request == null) {
