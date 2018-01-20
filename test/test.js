@@ -5,7 +5,11 @@
 //==============================================================================
 const supportedPaymentMethods = [  
   {  
-    supportedMethods: ['basic-card'],  
+    supportedMethods: ['basic-card'],
+    data: {
+        supportedNetworks: ['visa', 'mastercard', 'amex', 'discover'],
+        supportedTypes: ['credit', 'debit'],
+    },
   }  
 ];  
 
@@ -14,7 +18,7 @@ const paymentDetails = {
     label: 'Total',  
     amount:{  
       currency: 'USD',  
-      value: 1.50  
+      value: 0.50  
     }  
   }
 };
