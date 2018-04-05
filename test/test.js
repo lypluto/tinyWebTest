@@ -185,7 +185,7 @@ function onCanMakePayClicked() {
     }
     
     console.log("request.canMakePayment()...");
-    request.canMakeActivePayment()  
+    request.canMakePayment()  
     .then(function(response) {
         // Process response
         info(response ? "Can make active payment" : "Cannot make active payment");
