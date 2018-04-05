@@ -176,4 +176,24 @@ function onSpayBuyBtnClicked() {
     });
 }
 
+function onCanMakePayClicked() {
+    console.log("onCanMakePayClicked()...");
+    var request = buildPaymentRequest(checkoutPaymentInfo, visaIntentData, paymentInitParams);
+    if (request == null) {
+        console.error("onCanMakePayClicked: Null PaymentRequest!");
+        return;
+    }
+    
+    console.log("request.canMakePayment()...");
+    request.canMakeActivePayment()  
+    .then(function(response) {
+        // Process response
+        info(response ? "Can make active payment" : "Cannot make active payment");
+        console.log("canMakePayment done!");
+    }).catch(function(err) {
+        console.error("Something bad happened", err.message);
+        alert('Payment is cancelled!');
+    });
+}
+
 
