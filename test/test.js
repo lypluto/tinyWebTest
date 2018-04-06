@@ -201,21 +201,25 @@ function onCanMakePayClicked() {
         console.error("cannot make payment");
     }
     
-    console.log("do it again! request.canMakePayment()...");
-    if (request.canMakePayment) {
-        request.canMakePayment().then(function(result) {
-            if (result) {
-                console.log("Can make active payment!");
-            } else {
-                console.log("Cannot make active payment!");
-            }
-        }).catch(function(err) {
-            console.error("Something bad happened", err.message);
-            //alert('Payment is cancelled!');
-        });
-    } else {
-        console.error("cannot make payment");
-    }
+    setTimeout(function() {
+        console.log("do it again! request.canMakePayment()...");
+        if (request.canMakePayment) {
+            request.canMakePayment().then(function(result) {
+                if (result) {
+                    console.log("Can make active payment!");
+                } else {
+                    console.log("Cannot make active payment!");
+                }
+            }).catch(function(err) {
+                console.error("Something bad happened", err.message);
+                //alert('Payment is cancelled!');
+            });
+        } else {
+            console.error("cannot make payment");
+        }
+    }, 5000);
+    
+    
 }
 
 
