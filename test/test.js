@@ -185,15 +185,18 @@ function onCanMakePayClicked() {
     }
     
     console.log("request.canMakePayment()...");
-    request.canMakePayment()  
-    .then(function(response) {
-        // Process response
-        info(response ? "Can make active payment" : "Cannot make active payment");
-        console.log("canMakePayment done!");
-    }).catch(function(err) {
-        console.error("Something bad happened", err.message);
-        alert('Payment is cancelled!');
-    });
+    
+    if (request.canMakePayment) {
+        request.canMakePayment().then(function(result) {
+            info(result ? "Can make active payment" : "Cannot make active payment");
+            console.log("canMakePayment done!");
+        }).catch(function(err) {
+            console.error("Something bad happened", err.message);
+            //alert('Payment is cancelled!');
+        });
+    } else {
+        console.error("cannot make payment");
+    }
 }
 
 
